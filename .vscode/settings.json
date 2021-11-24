@@ -1,0 +1,11 @@
+{
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"files.associations": {
+		"*.pl": "prolog"
+	},
+	"prolog.executablePath": "C:/Program Files/swipl/bin/swipl",
+	"prolog.format.insertSpaces": false,
+	"editor.rulers": [80]
+}
