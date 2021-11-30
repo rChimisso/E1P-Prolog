@@ -1,30 +1,20 @@
-:- use_module(uriUtilities).
+:- use_module(charUtils).
+:- use_module(schemeMachine).
 
-% Better idea? Use a composition of FSM to create the URI-FSM, avoid as other
-% rules as much as possible. This would require to transform each input string
-% into its list of character codes and give this to the URI-FSM.
-% Create first each FSM for each part of a URI, then assemble them into the
-% URI-FSM by concatenating each final state to the next initial state and
-% merging states where needed.
-% At the end could be nice to minimize the URI-FSM.
-
-initial(emptyString).
 final(uri).
 
-delta(emptyString, String, scheme) :- isScheme(String).
-delta(scheme, _, uri).
+delta(scheme, ':', uri) :- !.
+delta(uri, Char, uri) :- isAllowedChar(Char), !.
 
-% accept([S | Ss], Q) :-
-% 	delta(Q, S, N),
-% 	accept(Ss, N).
-% accept([], Q) :- final(Q).
+accept([Char | Chars], State) :-
+	delta(State, Char, NewState),
+	accept(Chars, NewState).
+accept([], State) :- final(State).
 
-accept(String, Q) :-
-	delta(Q, String, N).
-accept([], Q) :- final(Q).
+% uriMachine(String).
 
-uri_parse(URIString) :-
-	initial(Q),
-	accept(URIString, Q).
+uri_parse(String) :- schemeMachine(String), !.
 
-uri_parse(URIString, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)).
+% uri_parse(URIString, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)).
+
+% How to merge?
