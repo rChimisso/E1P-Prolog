@@ -66,8 +66,7 @@ isIdentifierChar(Char) :-
  * apart from '#', '/', ':', '?' and '@'.
  */
 isIdentifierCode(CharCode) :-
-	isAllowedCode(CharCode),
-	CharCode \= 35,
+	isQueryCode(CharCode),
 	CharCode \= 47,
 	CharCode \= 58,
 	CharCode \= 63,
@@ -80,7 +79,7 @@ isIdentifierCode(CharCode) :-
  */
 isHostIdentifierChar(Char) :-
 	char_code(Char, CharCode),
-	isIdentifierCode(CharCode).
+	isHostIdentifierCode(CharCode).
 /**
  * isHostIdentifierCode(++CharCode:int) is det
  * 
@@ -88,13 +87,8 @@ isHostIdentifierChar(Char) :-
  * apart from '#', '.', '/', ':', '?' and '@'.
  */
 isHostIdentifierCode(CharCode) :-
-	isAllowedCode(CharCode),
-	CharCode \= 35,
-	CharCode \= 46,
-	CharCode \= 47,
-	CharCode \= 58,
-	CharCode \= 63,
-	CharCode \= 64.
+	isIdentifierCode(CharCode),
+	CharCode \= 46.
 /**
  * isDigitChar(++Char:int) is det
  * 
