@@ -1,12 +1,10 @@
 URI ::=
-	scheme ‘:’ ‘//’ authorithy [‘/’ [path] [‘?’ query] [‘#’ fragment]]
+	scheme ‘:’ ‘//’ [userinfo ‘@’] host [‘:’ port] [‘/’ [path] [‘?’ query] [‘#’ fragment]]
 	scheme ‘:’ [‘/’] [path] [‘?’ query] [‘#’ fragment]
 	scheme ‘:’ userinfo [‘@’ host]
 	scheme ‘:’ host
 
 scheme ::= <identificatore>
-
-authorithy ::= [ userinfo ‘@’ ] host [‘:’ port]
 
 userinfo ::= <identificatore>
 
