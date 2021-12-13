@@ -1,15 +1,19 @@
-:- module(schemeMachine, [schemeMachine/3]).
+:- module(userinfoMachine, [userinfoMachine/3]).
 
 :- use_module(charUtils).
 :- use_module(machineUtils).
 
 initial(empty).
-final(scheme).
+final(empty).
+final(userinfo).
 
-delta(empty, Char, scheme) :- isIdentifierChar(Char), !.
-delta(scheme, Char, scheme) :- isIdentifierChar(Char), !.
+delta(empty, Char, userinfo) :- isIdentifierChar(Char), !.
+delta(userinfo, Char, userinfo) :- isIdentifierChar(Char), !.
 
-accept([':' | Rest], State, [], Leftover) :-
+accept([], State, [], "") :-
+	final(State),
+	!.
+accept(['@' | Rest], State, [], Leftover) :-
 	final(State),
 	string_chars(Leftover, Rest),
 	!.
@@ -18,7 +22,7 @@ accept([Char | Chars], State, Scheme, Leftover) :-
 	accept(Chars, NewState, RestScheme, Leftover),
 	append([Char], RestScheme, Scheme).
 
-schemeMachine(String, Scheme, Leftover) :-
+userinfoMachine(String, Scheme, Leftover) :-
 	initial(State),
 	string_chars(String, Chars),
 	accept(Chars, State, ValueList, Leftover),

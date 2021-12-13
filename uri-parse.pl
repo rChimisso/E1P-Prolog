@@ -1,20 +1,24 @@
-:- use_module(charUtils).
 :- use_module(schemeMachine).
+:- use_module(userinfoMachine).
+:- use_module(hostMachine).
+:- use_module(portMachine).
+:- use_module(pathMachine).
+:- use_module(queryMachine).
+:- use_module(fragmentMachine).
 
-final(uri).
+uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
+    schemeMachine(String, Scheme, SchemeLeftover),
+    userinfoMachine(SchemeLeftover, Userinfo, UserinfoLeftover),
+    hostMachine(UserinfoLeftover, Host, HostLeftover),
+    portMachine(HostLeftover, Port, PortLeftover),
+    pathMachine(PortLeftover, Path, PathLeftover),
+    queryMachine(PathLeftover, Query, QueryLeftover),
+    fragmentMachine(QueryLeftover, Fragment, "").
 
-delta(scheme, ':', uri) :- !.
-delta(uri, Char, uri) :- isAllowedChar(Char), !.
+% uri_parse(String, uri(Scheme, Host, Port, AfterHost, AfterPort, _, _)) :-
+%     schemeMachine(String, Scheme, AfterScheme),
+% 	hostMachine(AfterScheme, Host, AfterHost),
+% 	portMachine(AfterHost, Port, AfterPort).
 
-accept([Char | Chars], State) :-
-	delta(State, Char, NewState),
-	accept(Chars, NewState).
-accept([], State) :- final(State).
-
-% uriMachine(String).
-
-uri_parse(String) :- schemeMachine(String), !.
-
-% uri_parse(URIString, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)).
-
-% How to merge?
+% consult('uri-parse.pl').
+% uri_parse("whatever://maria.z@prova.host.dai:77", Uri).
