@@ -54,7 +54,7 @@ isQueryCode(CharCode) :-
  * isIdentifierChar(++Char:char) is det
  * 
  * True if Char is a URI restrained ASCII character,
- * apart from '#', '/', ':', '?', and '@'.
+ * apart from '#', '/', ':', '?' and '@'.
  */
 isIdentifierChar(Char) :-
 	char_code(Char, CharCode),
@@ -63,7 +63,7 @@ isIdentifierChar(Char) :-
  * isIdentifierCode(++CharCode:int) is det
  * 
  * True if the integer supplied represents a URI restrained ASCII character,
- * apart from '#', '/', ':', '?', and '@'.
+ * apart from '#', '/', ':', '?' and '@'.
  */
 isIdentifierCode(CharCode) :-
 	isAllowedCode(CharCode),
@@ -76,7 +76,7 @@ isIdentifierCode(CharCode) :-
  * isHostIdentifierChar(++Char:char) is det
  * 
  * True if Char is a URI restrained ASCII character,
- * apart from '#', '.', '/', ':', '?', and '@'.
+ * apart from '#', '.', '/', ':', '?' and '@'.
  */
 isHostIdentifierChar(Char) :-
 	char_code(Char, CharCode),
@@ -85,7 +85,7 @@ isHostIdentifierChar(Char) :-
  * isHostIdentifierCode(++CharCode:int) is det
  * 
  * True if the integer supplied represents a URI restrained ASCII character,
- * apart from '#', '.', '/', ':', '?', and '@'.
+ * apart from '#', '.', '/', ':', '?' and '@'.
  */
 isHostIdentifierCode(CharCode) :-
 	isAllowedCode(CharCode),
