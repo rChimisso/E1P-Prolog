@@ -1,4 +1,5 @@
 :- use_module(schemeMachine).
+:- use_module(userhostMachine).
 :- use_module(userinfoMachine).
 :- use_module(hostMachine).
 :- use_module(portMachine).
@@ -19,6 +20,8 @@ uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 %     schemeMachine(String, Scheme, AfterScheme),
 % 	hostMachine(AfterScheme, Host, AfterHost),
 % 	portMachine(AfterHost, Port, AfterPort).
+
+% uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)
 
 % consult('uri-parse.pl').
 % uri_parse("whatever://maria.z@prova.host.dai:77", Uri).
