@@ -12,13 +12,7 @@ host ::= <identificatore-host> [‘.’ <identificatore-host>]*
 
 port ::= <digit>+
 
-path ::=
-	<identificatore> [‘/’ <identificatore>]*
-	<id44> [‘(’ <id8> ’)’]
-
-id44 ::= (<caratteri alfanumerici> | ‘.’)+
-
-id8 ::= <caratteri alfanumerici>+
+path ::= <identificatore> [‘/’ <identificatore>]*
 
 query ::= <caratteri senza ‘#’>+
 
