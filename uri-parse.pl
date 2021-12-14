@@ -1,7 +1,5 @@
 :- use_module(schemeMachine).
 :- use_module(userhostMachine).
-:- use_module(userinfoMachine).
-:- use_module(hostMachine).
 :- use_module(portMachine).
 :- use_module(pathMachine).
 :- use_module(queryMachine).
@@ -9,17 +7,11 @@
 
 uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
     schemeMachine(String, Scheme, SchemeLeftover),
-    userinfoMachine(SchemeLeftover, Userinfo, UserinfoLeftover),
-    hostMachine(UserinfoLeftover, Host, HostLeftover),
-    portMachine(HostLeftover, Port, PortLeftover),
+    userhostMachine(SchemeLeftover, Userinfo, Host, UserhostLeftover),
+    portMachine(UserhostLeftover, Port, PortLeftover),
     pathMachine(PortLeftover, Path, PathLeftover),
     queryMachine(PathLeftover, Query, QueryLeftover),
     fragmentMachine(QueryLeftover, Fragment, "").
-
-% uri_parse(String, uri(Scheme, Host, Port, AfterHost, AfterPort, _, _)) :-
-%     schemeMachine(String, Scheme, AfterScheme),
-% 	hostMachine(AfterScheme, Host, AfterHost),
-% 	portMachine(AfterHost, Port, AfterPort).
 
 % uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)
 
