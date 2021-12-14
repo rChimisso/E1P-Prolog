@@ -1,4 +1,4 @@
-:- module(fragmentMachine, [fragmentMachine/3]).
+:- module(fragmentMachine, [fragmentMachine/2]).
 
 :- use_module(charUtils).
 :- use_module(machineUtils).
@@ -10,16 +10,16 @@ final(fragment).
 delta(empty, Char, fragment) :- isAllowedChar(Char), !.
 delta(fragment, Char, fragment) :- isAllowedChar(Char), !.
 
-accept([], State, [], "") :-
+accept([], State, []) :-
 	final(State),
 	!.
-accept([Char | Chars], State, Fragment, Leftover) :-
+accept([Char | Chars], State, Fragment) :-
 	delta(State, Char, NewState),
-	accept(Chars, NewState, RestFragment, Leftover),
+	accept(Chars, NewState, RestFragment),
 	append([Char], RestFragment, Fragment).
 
-fragmentMachine(String, Fragment, Leftover) :-
+fragmentMachine(String, Fragment) :-
 	initial(State),
 	string_chars(String, Chars),
-	accept(Chars, State, ValueList, Leftover),
+	accept(Chars, State, ValueList),
 	listToURIValue(ValueList, Fragment).
