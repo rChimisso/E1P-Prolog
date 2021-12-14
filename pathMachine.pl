@@ -19,6 +19,10 @@ accept(['?' | Rest], State, [], Leftover) :-
 	final(State),
 	string_chars(Leftover, Rest),
 	!.
+accept(['#' | Rest], State, [], Leftover) :-
+	final(State),
+	string_chars(Leftover, Rest),
+	!.
 accept([Char | Chars], State, Path, Leftover) :-
 	delta(State, Char, NewState),
 	accept(Chars, NewState, RestPath, Leftover),
