@@ -9,6 +9,9 @@ final(path).
 final(query).
 final(fragment).
 
+% Works because for multiple slashes uriMachine chooses definetly another path.
+delta(empty, '/', empty) :- !.
+
 delta(empty, Char, path) :- isIdentifierChar(Char), !.
 delta(path, Char, path) :- isIdentifierChar(Char), !.
 delta(separator, Char, path) :- isIdentifierChar(Char), !.
