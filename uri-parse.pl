@@ -17,7 +17,6 @@ uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 
 % Aggiunte future:
 % Se possibile, sfoltimento codice e diminuizione duplicazione.
-% Controllare se è possibile unificare in un'unica istruzione l'import di moduli.
 
 % consult('uri-parse.pl').
 % uri_parse("whatever://maria.z@prova.host.dai:77", Uri).
