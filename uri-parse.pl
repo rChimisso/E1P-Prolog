@@ -7,8 +7,17 @@ uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 
 % uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)
 
-% Port può essere presente solo con // iniziali.
-% Dopo host e userinfo può esserci qualcosa solo con // iniziali.
+% Problemi:
+% Non riconosciute produzioni di tipo 2 con / inziale
+% Per le produzioni mailto (3) viene stampato un false superfluo per via del controllo su path.
+
+% Possibili soluzioni:
+% Aggiungere delta a uriMachine.
+% Aggiungere accept a uriMachine.
+
+% Aggiunte future:
+% Se possibile, sfoltimento codice e diminuizione duplicazione.
+% Controllare se è possibile unificare in un'unica istruzione l'import di moduli.
 
 % consult('uri-parse.pl').
 % uri_parse("whatever://maria.z@prova.host.dai:77", Uri).
