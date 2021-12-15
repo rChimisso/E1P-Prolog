@@ -4,15 +4,14 @@
 :- use_module(userhostMachine).
 :- use_module(portMachine).
 :- use_module(pqfMachine).
-:- use_module(machineUtils).
 
-uriMachine(String, Userinfo, Host, Port, Path, Query, Fragment) :-
-	startsWith("//", String, TrimmedLeftover),
+uriMachine(Chars, Userinfo, Host, Port, Path, Query, Fragment) :-
+	append([/, /], TrimmedChars, Chars),
 	!,
-    userhostMachine(TrimmedLeftover, Userinfo, Host, UserhostLeftover),
+    userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
     portMachine(UserhostLeftover, Port, PortLeftover),
     pqfMachine(PortLeftover, Path, Query, Fragment).
-uriMachine(String, Userinfo, Host, '80', [], [], []) :-
-    userhostMachine(String, Userinfo, Host, "").
-uriMachine(String, [], [], '80', Path, Query, Fragment) :-
-    pqfMachine(String, Path, Query, Fragment).
+uriMachine(Chars, Userinfo, Host, '80', [], [], []) :-
+    userhostMachine(Chars, Userinfo, Host, []).
+uriMachine(Chars, [], [], '80', Path, Query, Fragment) :-
+    pqfMachine(Chars, Path, Query, Fragment).

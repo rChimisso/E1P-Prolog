@@ -9,17 +9,15 @@ final(scheme).
 delta(empty, Char, scheme) :- isIdentifierChar(Char), !.
 delta(scheme, Char, scheme) :- isIdentifierChar(Char), !.
 
-accept([':' | Rest], State, [], Leftover) :-
+accept([':' | Leftover], State, [], Leftover) :-
 	final(State),
-	string_chars(Leftover, Rest),
 	!.
 accept([Char | Chars], State, Scheme, Leftover) :-
 	delta(State, Char, NewState),
 	accept(Chars, NewState, RestScheme, Leftover),
 	append([Char], RestScheme, Scheme).
 
-schemeMachine(String, Scheme, Leftover) :-
+schemeMachine(Chars, Scheme, Leftover) :-
 	initial(State),
-	string_chars(String, Chars),
 	accept(Chars, State, ValueList, Leftover),
 	listToURIValue(ValueList, Scheme).

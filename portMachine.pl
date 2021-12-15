@@ -10,11 +10,10 @@ final(port).
 delta(pStart, Char, port) :- isDigitChar(Char), !.
 delta(port, Char, port) :- isDigitChar(Char), !.
 
-accept([], port, [], "") :- !.
-accept([], empty, ['8', '0'], "") :- !.
-accept(['/' | Rest], State, Port, Leftover) :-
+accept([], port, [], []) :- !.
+accept([], empty, ['8', '0'], []) :- !.
+accept(['/' | Leftover], State, Port, Leftover) :-
 	accept([], State, Port, _),
-	string_chars(Leftover, Rest),
 	!.
 accept([':' | Rest], empty, Port, Leftover) :-
 	accept(Rest, pStart, Port, Leftover),
@@ -24,8 +23,7 @@ accept([Char | Chars], State, Port, Leftover) :-
 	accept(Chars, NewState, RestPort, Leftover),
 	append([Char], RestPort, Port).
 
-portMachine(String, Port, Leftover) :-
+portMachine(Chars, Port, Leftover) :-
 	initial(State),
-	string_chars(String, Chars),
 	accept(Chars, State, ValueList, Leftover),
 	listToURIValue(ValueList, Port).

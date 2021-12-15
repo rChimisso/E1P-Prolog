@@ -2,7 +2,8 @@
 :- use_module(uriMachine).
 
 uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
-    schemeMachine(String, Scheme, SchemeLeftover),
+	string_chars(String, Chars),
+    schemeMachine(Chars, Scheme, SchemeLeftover),
 	uriMachine(SchemeLeftover, Userinfo, Host, Port, Path, Query, Fragment).
 
 % uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)

@@ -53,9 +53,8 @@ accept([Char | Chars], State, Path, Query, Fragment) :-
 	!,
 	append([Char], RestFragment, Fragment).
 
-pqfMachine(String, Path, Query, Fragment) :-
+pqfMachine(Chars, Path, Query, Fragment) :-
 	initial(State),
-	string_chars(String, Chars),
 	accept(Chars, State, PathList, QueryList, FragmentList),
 	listToURIValue(PathList, Path),
 	listToURIValue(QueryList, Query),
