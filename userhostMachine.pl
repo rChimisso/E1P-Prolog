@@ -19,10 +19,10 @@ accept([], State, [], [], "") :-
 	final(State),
 	!.
 accept([':' | Rest], host, [], [], Leftover) :-
-	string_chars(Leftover, Rest),
+	string_chars(Leftover, [':' | Rest]),
 	!.
 accept(['/' | Rest], host, [], [], Leftover) :-
-	string_chars(Leftover, Rest),
+	string_chars(Leftover, ['/' | Rest]),
 	!.
 accept(['@' | Chars], userinfo, [], Host, Leftover) :-
 	accept(Chars, at, _, Host, Leftover),

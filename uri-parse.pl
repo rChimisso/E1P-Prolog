@@ -1,22 +1,12 @@
 :- use_module(schemeMachine).
-:- use_module(userhostMachine).
-:- use_module(portMachine).
-:- use_module(pathMachine).
-:- use_module(queryMachine).
-:- use_module(fragmentMachine).
+:- use_module(uriMachine).
 
 uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
     schemeMachine(String, Scheme, SchemeLeftover),
-    userhostMachine(SchemeLeftover, Userinfo, Host, UserhostLeftover),
-    portMachine(UserhostLeftover, Port, PortLeftover),
-    pathMachine(PortLeftover, Path, PathLeftover),
-    queryMachine(PathLeftover, Query, QueryLeftover),
-    fragmentMachine(QueryLeftover, Fragment).
+	uriMachine(SchemeLeftover, Userinfo, Host, Port, Path, Query, Fragment).
 
 % uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)
 
-% Per l'opzionalità, i caratteri separatori vengono consumati troppe volte.
-% Costruire macchina per Path Query e Fragment.
 % Port può essere presente solo con // iniziali.
 % Dopo host e userinfo può esserci qualcosa solo con // iniziali.
 

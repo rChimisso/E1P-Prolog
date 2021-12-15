@@ -7,14 +7,17 @@ initial(empty).
 final(empty).
 final(port).
 
-delta(empty, Char, port) :- isDigitChar(Char), !.
+delta(pStart, Char, port) :- isDigitChar(Char), !.
 delta(port, Char, port) :- isDigitChar(Char), !.
 
 accept([], port, [], "") :- !.
 accept([], empty, ['8', '0'], "") :- !.
 accept(['/' | Rest], State, Port, Leftover) :-
-	accept(_, State, Port, _),
+	accept([], State, Port, _),
 	string_chars(Leftover, Rest),
+	!.
+accept([':' | Rest], empty, Port, Leftover) :-
+	accept(Rest, pStart, Port, Leftover),
 	!.
 accept([Char | Chars], State, Port, Leftover) :-
 	delta(State, Char, NewState),
