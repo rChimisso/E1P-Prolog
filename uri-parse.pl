@@ -14,8 +14,7 @@ uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 % Per le produzioni del tipo "scheme://userhost" viene stampato "userhost" sia come host (corretto) che come userinfo (sbagliato).
 
 % Possibili soluzioni:
-% Aggiungere delta a uriMachine.
-% Aggiungere accept a uriMachine.
+% Dare info a userhostMachine se sono presenti le doppie slash o meno.
 
 % Aggiunte future:
 % Se possibile, sfoltimento codice e diminuizione duplicazione.
