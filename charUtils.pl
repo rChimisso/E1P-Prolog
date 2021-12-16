@@ -3,11 +3,12 @@
 	isQueryChar/1,
 	isIdentifierChar/1,
 	isHostIdentifierChar/1,
-	isDigitChar/1
+	isDigitChar/1,
+	listToURIValue/2
 ]).
 
 /**
- * isAllowedChar(++Char:char) is det
+ * isAllowedChar(++Char:char) is semidet.
  * 
  * True if Char is a URI restrained ASCII character.
  */
@@ -15,7 +16,7 @@ isAllowedChar(Char) :-
 	char_code(Char, CharCode),
 	isAllowedCode(CharCode).
 /**
- * isAllowedCode(++CharCode:int) is det
+ * isAllowedCode(++CharCode:int) is semidet.
  * 
  * True if the integer supplied represents a URI restrained ASCII character.
  */
@@ -33,16 +34,16 @@ isAllowedCode(CharCode) :-
 	CharCode \= 124, % |
 	CharCode \= 125. % }
 /**
- * isQueryChar(++Char:char) is det
+ * isQueryChar(++Char:char) is semidet.
  * 
- * True if Char is a URI restrained ASCII character,
+ * True if Char is  a URI restrained ASCII character,
  * apart from '#'.
  */
 isQueryChar(Char) :-
 	char_code(Char, CharCode),
 	isQueryCode(CharCode).
 /**
- * isQueryCode(++CharCode:int) is det
+ * isQueryCode(++CharCode:int) is semidet.
  * 
  * True if the integer supplied represents a URI restrained ASCII character,
  * apart from '#'.
@@ -51,7 +52,7 @@ isQueryCode(CharCode) :-
 	isAllowedCode(CharCode),
 	CharCode \= 35.
 /**
- * isIdentifierChar(++Char:char) is det
+ * isIdentifierChar(++Char:char) is semidet.
  * 
  * True if Char is a URI restrained ASCII character,
  * apart from '#', '/', ':', '?' and '@'.
@@ -60,7 +61,7 @@ isIdentifierChar(Char) :-
 	char_code(Char, CharCode),
 	isIdentifierCode(CharCode).
 /**
- * isIdentifierCode(++CharCode:int) is det
+ * isIdentifierCode(++CharCode:int) is semidet.
  * 
  * True if the integer supplied represents a URI restrained ASCII character,
  * apart from '#', '/', ':', '?' and '@'.
@@ -72,7 +73,7 @@ isIdentifierCode(CharCode) :-
 	CharCode \= 63,
 	CharCode \= 64.
 /**
- * isHostIdentifierChar(++Char:char) is det
+ * isHostIdentifierChar(++Char:char) is semidet.
  * 
  * True if Char is a URI restrained ASCII character,
  * apart from '#', '.', '/', ':', '?' and '@'.
@@ -81,7 +82,7 @@ isHostIdentifierChar(Char) :-
 	char_code(Char, CharCode),
 	isHostIdentifierCode(CharCode).
 /**
- * isHostIdentifierCode(++CharCode:int) is det
+ * isHostIdentifierCode(++CharCode:int) is semidet.
  * 
  * True if the integer supplied represents a URI restrained ASCII character,
  * apart from '#', '.', '/', ':', '?' and '@'.
@@ -90,7 +91,7 @@ isHostIdentifierCode(CharCode) :-
 	isIdentifierCode(CharCode),
 	CharCode \= 46.
 /**
- * isDigitChar(++Char:int) is det
+ * isDigitChar(++Char:char) is semidet.
  * 
  * True if Char is a URI restrained ASCII character representing a digit.
  */
@@ -98,7 +99,7 @@ isDigitChar(Char) :-
 	char_code(Char, CharCode),
 	isDigitCode(CharCode).
 /**
- * isDigit(++Char:int) is det
+ * isDigitCode(++CharCode:int) is semidet.
  * 
  * True if the integer supplied represents a URI restrained ASCII character
  * representing a digit.
@@ -106,3 +107,11 @@ isDigitChar(Char) :-
 isDigitCode(CharCode) :-
 	CharCode > 47,
 	CharCode < 58.
+/**
+ * listToURIValue(++List:list, -Value:atom) is semidet.
+ * listToURIValue(-List:list, ++Value:atom) is semidet.
+ * 
+ * True if the given list can be converted to an atom or viceversa.
+ */
+listToURIValue([], []) :- !.
+listToURIValue(List, Value) :- atom_chars(Value, List).

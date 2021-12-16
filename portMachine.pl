@@ -1,7 +1,6 @@
 :- module(portMachine, [portMachine/3]).
 
 :- use_module(charUtils).
-:- use_module(machineUtils).
 
 initial(empty).
 final(empty).

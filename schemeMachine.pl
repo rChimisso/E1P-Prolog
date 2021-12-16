@@ -1,7 +1,6 @@
 :- module(schemeMachine, [schemeMachine/3]).
 
 :- use_module(charUtils).
-:- use_module(machineUtils).
 
 initial(empty).
 final(scheme).

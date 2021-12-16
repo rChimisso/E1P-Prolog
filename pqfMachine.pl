@@ -1,7 +1,6 @@
 :- module(pqfMachine, [pqfMachine/4]).
 
 :- use_module(charUtils).
-:- use_module(machineUtils).
 
 initial(empty).
 final(empty).

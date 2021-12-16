@@ -1,7 +1,6 @@
 :- module(userhostMachine, [userhostMachine/4]).
 
 :- use_module(charUtils).
-:- use_module(machineUtils).
 
 initial(empty).
 final(userinfo).
