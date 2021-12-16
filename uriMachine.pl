@@ -7,9 +7,9 @@
 
 uriMachine(Chars, Userinfo, Host, Port, Path, Query, Fragment) :-
 	append([/, /], TrimmedChars, Chars),
-	!,
+	!, % If it starts with "//", this becomes the only possible production.
     userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
-	!,
+	!, % Avoid considering Host as Userinfo.
     portMachine(UserhostLeftover, Port, PortLeftover),
     pqfMachine(PortLeftover, Path, Query, Fragment).
 uriMachine(Chars, Userinfo, Host, '80', [], [], []) :-

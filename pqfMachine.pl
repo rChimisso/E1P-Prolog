@@ -5,12 +5,12 @@
 
 initial(empty).
 final(empty).
+final(slash).
 final(path).
 final(query).
 final(fragment).
 
-% Works because for multiple slashes uriMachine chooses definetly another path.
-delta(empty, '/', empty) :- !.
+delta(slash, Char, path) :- isIdentifierChar(Char), !.
 
 delta(empty, Char, path) :- isIdentifierChar(Char), !.
 delta(path, Char, path) :- isIdentifierChar(Char), !.
@@ -24,6 +24,9 @@ delta(fragment, Char, fragment) :- isAllowedChar(Char), !.
 
 accept([], State, [], [], []) :-
 	final(State),
+	!.
+accept(['/' | Chars], empty, Path, Query, Fragment) :-
+	accept(Chars, slash, Path, Query, Fragment),
 	!.
 accept(['?' | Chars], State, [], Query, Fragment) :-
 	State \= query,

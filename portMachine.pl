@@ -12,11 +12,11 @@ delta(port, Char, port) :- isDigitChar(Char), !.
 
 accept([], port, [], []) :- !.
 accept([], empty, ['8', '0'], []) :- !.
-accept(['/' | Leftover], State, Port, Leftover) :-
-	accept([], State, Port, _),
+accept(['/' | Rest], State, Port, ['/' | Rest]) :-
+	accept([], State, Port, []),
 	!.
-accept([':' | Rest], empty, Port, Leftover) :-
-	accept(Rest, pStart, Port, Leftover),
+accept([':' | Chars], empty, Port, Leftover) :-
+	accept(Chars, pStart, Port, Leftover),
 	!.
 accept([Char | Chars], State, Port, Leftover) :-
 	delta(State, Char, NewState),
