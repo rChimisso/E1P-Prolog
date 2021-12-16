@@ -9,6 +9,7 @@ uriMachine(Chars, Userinfo, Host, Port, Path, Query, Fragment) :-
 	append([/, /], TrimmedChars, Chars),
 	!,
     userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
+	!,
     portMachine(UserhostLeftover, Port, PortLeftover),
     pqfMachine(PortLeftover, Path, Query, Fragment).
 uriMachine(Chars, Userinfo, Host, '80', [], [], []) :-
