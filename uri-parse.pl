@@ -1,4 +1,5 @@
 :- use_module(schemeMachine).
+:- use_module(userhostMachine).
 :- use_module(uriMachine).
 
 /**
@@ -6,6 +7,31 @@
  * 
  * True when the given string represents a valid URI.
  */
+uri_parse(String, uri(mailto, Userinfo, Host, '80', [], [], [])) :-
+	string_chars(String, Chars),
+    schemeMachine(Chars, mailto, SchemeLeftover),
+	!,
+	userhostMachine(SchemeLeftover, Userinfo, Host, []),
+	Userinfo \= [].
+uri_parse(String, uri(news, [], Host, '80', [], [], [])) :-
+	string_chars(String, Chars),
+    schemeMachine(Chars, news, SchemeLeftover),
+	!,
+	userhostMachine(SchemeLeftover, '', Host, []),
+	!, % Avoid considering Host as Userinfo.
+	Host \= [].
+uri_parse(String, uri(tel, Userinfo, [], '80', [], [], [])) :-
+	string_chars(String, Chars),
+    schemeMachine(Chars, tel, SchemeLeftover),
+	!,
+	userhostMachine(SchemeLeftover, Userinfo, '', []),
+	Userinfo \= [].
+uri_parse(String, uri(fax, Userinfo, [], '80', [], [], [])) :-
+	string_chars(String, Chars),
+    schemeMachine(Chars, fax, SchemeLeftover),
+	!,
+	userhostMachine(SchemeLeftover, Userinfo, '', []),
+	Userinfo \= [].
 uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	string_chars(String, Chars),
     schemeMachine(Chars, Scheme, SchemeLeftover),
