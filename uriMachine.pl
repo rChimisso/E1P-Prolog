@@ -12,6 +12,16 @@ uriMachine(Chars, Userinfo, Host, Port, Path, Query, Fragment) :-
 	!, % Avoid considering Host as Userinfo.
     portMachine(UserhostLeftover, Port, PortLeftover),
     pqfMachine(PortLeftover, Path, Query, Fragment).
+/**
+ * The following version of this machine is needed only to not have a useless
+ * false as a result when the URI follows the mailto scheme-syntax with
+ * both Userinfo and Host present (when '@' is present).
+ */
+uriMachine(Chars, Userinfo, Host, '80', [], [], []) :-
+    userhostMachine(Chars, Userinfo, Host, []),
+	Userinfo \= [],
+	Host \= [],
+	!.
 uriMachine(Chars, Userinfo, Host, '80', [], [], []) :-
     userhostMachine(Chars, Userinfo, Host, []).
 uriMachine(Chars, [], [], '80', Path, Query, Fragment) :-
