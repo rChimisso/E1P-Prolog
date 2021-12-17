@@ -1,6 +1,5 @@
 :- module(pqfMachine, [pqfMachine/4]).
 
-:- use_module(charUtils).
 :- use_module(pathMachine).
 :- use_module(qfMachine).
 

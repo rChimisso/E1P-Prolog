@@ -16,14 +16,14 @@ delta(separator, Char, path) :- isIdentifierChar(Char), !.
 accept([], State, [], []) :-
 	final(State),
 	!.
-accept(['/' | Chars], empty, Path, Leftover) :-
-	accept(Chars, slash, Path, Leftover),
-	!.
 accept(['?' | Rest], State, [], ['?' | Rest]) :-
 	final(State),
 	!.
 accept(['#' | Rest], State, [], ['#' | Rest]) :-
 	final(State),
+	!.
+accept(['/' | Chars], empty, Path, Leftover) :-
+	accept(Chars, slash, Path, Leftover),
 	!.
 accept([Char | Chars], State, Path, Leftover) :-
 	delta(State, Char, NewState),
