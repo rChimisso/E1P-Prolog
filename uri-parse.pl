@@ -38,7 +38,7 @@ uri_parse(String, uri(zos, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	string_chars(String, Chars),
     schemeMachine(Chars, zos, SchemeLeftover),
 	append([/, /], TrimmedChars, SchemeLeftover),
-	!, % If it starts with "//", this becomes the only possible production.
+	!, % If it starts with "//", this becomes the only possible zos production.
     userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
 	!, % Avoid considering Host as Userinfo.
     portMachine(UserhostLeftover, Port, PortLeftover),
