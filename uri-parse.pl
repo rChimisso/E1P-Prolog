@@ -1,5 +1,7 @@
 :- use_module(schemeMachine).
 :- use_module(userhostMachine).
+:- use_module(pqfZosMachine).
+:- use_module(portMachine).
 :- use_module(uriMachine).
 
 /**
@@ -32,6 +34,20 @@ uri_parse(String, uri(fax, Userinfo, [], '80', [], [], [])) :-
 	!,
 	userhostMachine(SchemeLeftover, Userinfo, '', []),
 	Userinfo \= [].
+uri_parse(String, uri(zos, Userinfo, Host, Port, Path, Query, Fragment)) :-
+	string_chars(String, Chars),
+    schemeMachine(Chars, zos, SchemeLeftover),
+	append([/, /], TrimmedChars, SchemeLeftover),
+	!, % If it starts with "//", this becomes the only possible production.
+    userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
+	!, % Avoid considering Host as Userinfo.
+    portMachine(UserhostLeftover, Port, PortLeftover),
+    pqfZosMachine(PortLeftover, Path, Query, Fragment).
+uri_parse(String, uri(zos, [], [], '80', Path, Query, Fragment)) :-
+	string_chars(String, Chars),
+    schemeMachine(Chars, zos, SchemeLeftover),
+	!,
+	pqfZosMachine(SchemeLeftover, Path, Query, Fragment).
 uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	string_chars(String, Chars),
     schemeMachine(Chars, Scheme, SchemeLeftover),
