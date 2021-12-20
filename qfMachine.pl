@@ -34,7 +34,12 @@ accept([Char | Chars], State, Query, Fragment) :-
 	accept(Chars, fragment, Query, RestFragment),
 	!,
 	append([Char], RestFragment, Fragment).
-
+/**
+ * qfMachine(++Chars:char[], -Query:atomic, -Fragment:atomic) is semidet.
+ * 
+ * True when the list of characters initially has a valid URI definition for
+ * Query and Fragment in that order.
+ */
 qfMachine(Chars, Query, Fragment) :-
 	initial(State),
 	accept(Chars, State, QueryList, FragmentList),

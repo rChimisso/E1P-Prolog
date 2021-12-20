@@ -4,6 +4,11 @@
 :- use_module(userhostMachine).
 :- use_module(prMachine).
 
+noPathScheme(Scheme) :-
+	Scheme \= zos,
+	Scheme \= http,
+	Scheme \= https.
+
 uriMachine(Chars, uri(mailto, Userinfo, Host, '80', [], [], [])) :-
 	!,
     userhostMachine(Chars, Userinfo, Host, []),
@@ -28,30 +33,30 @@ uriMachine(Chars, uri(fax, Userinfo, [], '80', [], [], [])) :-
  * Without it, it would be checked if the URI has Path and thus the false.
  */
 uriMachine(Chars, uri(Scheme, Userinfo, Host, '80', [], [], [])) :-
-	Scheme \= zos,
+	noPathScheme(Scheme),
     userhostMachine(Chars, Userinfo, Host, []),
 	Userinfo \= [],
 	Host \= [],
 	!.
 uriMachine(Chars, uri(Scheme, Userinfo, Host, '80', [], [], [])) :-
-	Scheme \= zos,
+	noPathScheme(Scheme),
     userhostMachine(Chars, Userinfo, Host, []).
 uriMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	prMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)).
 
 /**
-"mailto" ':' userinfo ['@' host]
-"news" ':' host
-"tel" ':' userinfo
-"fax" ':' userinfo
-"zos" ':' authority ['/' [zosPath] ['?' query] ['#' fragment]]
-"http" ':' authority ['/' [path] ['?' query] ['#' fragment]]
-"https" ':' authority ['/' [path] ['?' query] ['#' fragment]]
-scheme ':' userinfo ['@' host]
-scheme ':' host
-scheme ':' userinfo
-scheme ':' authority ['/' [path] ['?' query] ['#' fragment]]
-scheme ':' ['/'] [path] ['?' query] ['#' fragment]
-scheme ':' authority ['/' [zosPath] ['?' query] ['#' fragment]]
-scheme ':' ['/'] [zosPath] ['?' query] ['#' fragment]
+	"mailto" ':' userinfo ['@' host]
+	"news" ':' host
+	"tel" ':' userinfo
+	"fax" ':' userinfo
+	"zos" ':' authority ['/' [zosPath] ['?' query] ['#' fragment]]
+	"http" ':' authority ['/' [path] ['?' query] ['#' fragment]]
+	"https" ':' authority ['/' [path] ['?' query] ['#' fragment]]
+	scheme ':' userinfo ['@' host]
+	scheme ':' host
+	scheme ':' userinfo
+	scheme ':' authority ['/' [path] ['?' query] ['#' fragment]]
+	scheme ':' ['/'] [path] ['?' query] ['#' fragment]
+	scheme ':' authority ['/' [zosPath] ['?' query] ['#' fragment]]
+	scheme ':' ['/'] [zosPath] ['?' query] ['#' fragment]
  */

@@ -21,7 +21,11 @@ accept([Char | Chars], State, Port, Leftover) :-
 	delta(State, Char, NewState),
 	accept(Chars, NewState, RestPort, Leftover),
 	append([Char], RestPort, Port).
-
+/**
+ * portMachine(++Chars:char[], -Port:atomic, -Leftover:char[]) is semidet.
+ * 
+ * True when the list of characters initially has a valid URI port definition.
+ */
 portMachine(Chars, Port, Leftover) :-
 	initial(State),
 	accept(Chars, State, ValueList, Leftover),

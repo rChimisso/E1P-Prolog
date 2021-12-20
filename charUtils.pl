@@ -117,8 +117,8 @@ isAlnumChar(Char) :-
 	char_type(Char, alnum),
 	isAllowedChar(Char).
 /**
- * listToURIValue(++List:list, -Value:atom) is semidet.
- * listToURIValue(-List:list, ++Value:atom) is semidet.
+ * listToURIValue(++List:list, -Value:atomic) is semidet.
+ * listToURIValue(-List:list, ++Value:atomic) is semidet.
  * 
  * True if the given list can be converted to an atom or viceversa.
  */

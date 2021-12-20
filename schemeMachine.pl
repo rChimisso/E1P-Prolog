@@ -15,7 +15,11 @@ accept([Char | Chars], State, Scheme, Leftover) :-
 	delta(State, Char, NewState),
 	accept(Chars, NewState, RestScheme, Leftover),
 	append([Char], RestScheme, Scheme).
-
+/**
+ * schemeMachine(++Chars:char[], -Scheme:atomic, -Leftover:char[]) is semidet.
+ * 
+ * True when the list of characters initially has a valid URI scheme definition.
+ */
 schemeMachine(Chars, Scheme, Leftover) :-
 	initial(State),
 	accept(Chars, State, ValueList, Leftover),

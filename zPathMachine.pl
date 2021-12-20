@@ -51,7 +51,16 @@ accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
 	delta(State, Char, NewState),
 	accept(Chars, NewState, ID44, ID8, RestPath, Leftover),
 	append([Char], RestPath, Path).
-
+/**
+ * zPathMachine(
+	++Chars:char[],
+	Path:atomic,
+	-Leftover:char[]
+ * ) is semidet.
+ * 
+ * True when the list of characters initially has a valid URI zOS specific
+ * path definition, but without any constraint on ID44 and ID8 length.
+ */
 zPathMachine(Chars, ID44, ID8, Path, Leftover) :-
 	initial(State),
 	accept(Chars, State, ID44, ID8, ValueList, Leftover),

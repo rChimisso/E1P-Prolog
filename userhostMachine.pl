@@ -31,7 +31,17 @@ accept([Char | Chars], State, Userinfo, Host, Leftover) :-
 	delta(State, Char, userinfo),
 	accept(Chars, userinfo, RestUserinfo, Host, Leftover),
 	append([Char], RestUserinfo, Userinfo).
-
+/**
+ * userhostMachine(
+ *	++Chars:char[],
+ *	-Userinfo:atomic,
+ *	-Host:atomic,
+ *  -Leftover:char[]
+ * ) is semidet.
+ * 
+ * True when the list of characters initially has a valid URI definition for
+ * Userinfo and/or Host.
+ */
 userhostMachine(Chars, Userinfo, Host, Leftover) :-
 	initial(State),
 	accept(Chars, State, UserinfoList, HostList, Leftover),

@@ -29,7 +29,11 @@ accept([Char | Chars], State, Path, Leftover) :-
 	delta(State, Char, NewState),
 	accept(Chars, NewState, RestPath, Leftover),
 	append([Char], RestPath, Path).
-
+/**
+ * pathMachine(++Chars:char[], -Path:atomic, -Leftover:char[]) is semidet.
+ * 
+ * True when the list of characters initially has a valid URI path definition.
+ */
 pathMachine(Chars, Path, Leftover) :-
 	initial(State),
 	accept(Chars, State, ValueList, Leftover),
