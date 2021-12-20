@@ -8,13 +8,13 @@ final(slash).
 final(id44).
 final(path).
 
-delta(slash, Char, id44) :- isAlnumChar(Char), !.
-delta(empty, Char, id44) :- isAlnumChar(Char), !.
+delta(slash, Char, id44) :- isAlphaChar(Char), !.
+delta(empty, Char, id44) :- isAlphaChar(Char), !.
 delta(id44, Char, id44) :- isAlnumChar(Char), !.
 delta(id44, '.', separator) :- !.
 delta(separator, Char, id44) :- isAlnumChar(Char), !.
 delta(id44, '(', id8Start) :- !.
-delta(id8Start, Char, id8) :- isAlnumChar(Char), !.
+delta(id8Start, Char, id8) :- isAlphaChar(Char), !.
 delta(id8, Char, id8) :- isAlnumChar(Char), !.
 
 accept([], State, '', '', [], []) :-

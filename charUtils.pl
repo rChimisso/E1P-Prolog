@@ -4,6 +4,7 @@
 	isIdentifierChar/1,
 	isHostIdentifierChar/1,
 	isDigitChar/1,
+	isAlphaChar/1,
 	isAlnumChar/1,
 	listToURIValue/2
 ]).
@@ -108,6 +109,14 @@ isDigitChar(Char) :-
 isDigitCode(CharCode) :-
 	CharCode > 47,
 	CharCode < 58.
+/**
+ * isAlphaChar(++Char:char) is semidet.
+ * 
+ * True if Char is a alphabetic URI restrained ASCII character.
+ */
+isAlphaChar(Char) :-
+	char_type(Char, alpha),
+	isAllowedChar(Char).
 /**
  * isAlnumChar(++Char:char) is semidet.
  * 
