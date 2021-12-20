@@ -4,6 +4,7 @@
 
 initial(empty).
 final(empty).
+final(slash).
 final(id44).
 final(path).
 
