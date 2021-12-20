@@ -3,6 +3,7 @@
 :- use_module(charUtils).
 
 initial(empty).
+final(empty).
 final(id44).
 final(path).
 

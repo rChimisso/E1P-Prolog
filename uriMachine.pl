@@ -2,9 +2,7 @@
 
 :- use_module(schemeMachine).
 :- use_module(userhostMachine).
-:- use_module(portMachine).
-:- use_module(pqfMachine).
-:- use_module(zpqfMachine).
+:- use_module(prMachine).
 
 uriMachine(Chars, uri(mailto, Userinfo, Host, '80', [], [], [])) :-
 	!,
@@ -23,42 +21,37 @@ uriMachine(Chars, uri(fax, Userinfo, [], '80', [], [], [])) :-
 	!,
     userhostMachine(Chars, Userinfo, '', []),
 	Userinfo \= [].
-uriMachine(Chars, uri(zos, Userinfo, Host, Port, Path, Query, Fragment)) :-
-	!,
-	append([/, /], TrimmedChars, Chars),
-	!, % If it starts with "//", this becomes the only possible production.
-    userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
-	!, % Avoid considering Host as Userinfo.
-    portMachine(UserhostLeftover, Port, PortLeftover),
-    zpqfMachine(PortLeftover, Path, Query, Fragment).
-uriMachine(Chars, uri(zos, [], [], '80', Path, Query, Fragment)) :-
-	!,
-    zpqfMachine(Chars, Path, Query, Fragment).
-uriMachine(Chars, uri(_, Userinfo, Host, Port, Path, Query, Fragment)) :-
-	append([/, /], TrimmedChars, Chars),
-	!, % If it starts with "//", this becomes the only possible production.
-    userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
-	!, % Avoid considering Host as Userinfo.
-    portMachine(UserhostLeftover, Port, PortLeftover),
-    pqfMachine(PortLeftover, Path, Query, Fragment).
 /**
  * The following version of this machine is needed only to not have a useless
  * false as a result when the URI follows the mailto scheme-syntax with
  * both Userinfo and Host present (when '@' is present).
- * Without it, it would be checked if the URI has a path and thus the false.
+ * Without it, it would be checked if the URI has Path and thus the false.
  */
-uriMachine(Chars, uri(_, Userinfo, Host, '80', [], [], [])) :-
+uriMachine(Chars, uri(Scheme, Userinfo, Host, '80', [], [], [])) :-
+	Scheme \= zos,
     userhostMachine(Chars, Userinfo, Host, []),
 	Userinfo \= [],
 	Host \= [],
 	!.
-uriMachine(Chars, uri(_, Userinfo, Host, '80', [], [], [])) :-
+uriMachine(Chars, uri(Scheme, Userinfo, Host, '80', [], [], [])) :-
+	Scheme \= zos,
     userhostMachine(Chars, Userinfo, Host, []).
-uriMachine(Chars, uri(_, [], [], '80', Path, Query, Fragment)) :-
-    pqfMachine(Chars, Path, Query, Fragment).
+uriMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
+	prMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)).
 
-% Due to the cut and the double productions for zos, only the production with
-% authority is considered for zos.
-% Possible solution may be to extract append, userhostMachine and portMachine
-% into a separate authorityMachine, unify then the productions (zos and generic)
-% with pqf machines.
+/**
+"mailto" ':' userinfo ['@' host]
+"news" ':' host
+"tel" ':' userinfo
+"fax" ':' userinfo
+"zos" ':' authority ['/' [zosPath] ['?' query] ['#' fragment]]
+"http" ':' authority ['/' [path] ['?' query] ['#' fragment]]
+"https" ':' authority ['/' [path] ['?' query] ['#' fragment]]
+scheme ':' userinfo ['@' host]
+scheme ':' host
+scheme ':' userinfo
+scheme ':' authority ['/' [path] ['?' query] ['#' fragment]]
+scheme ':' ['/'] [path] ['?' query] ['#' fragment]
+scheme ':' authority ['/' [zosPath] ['?' query] ['#' fragment]]
+scheme ':' ['/'] [zosPath] ['?' query] ['#' fragment]
+ */
