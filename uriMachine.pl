@@ -43,20 +43,3 @@ uriMachine(Chars, uri(Scheme, Userinfo, Host, '80', [], [], [])) :-
     userhostMachine(Chars, Userinfo, Host, []).
 uriMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	prMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)).
-
-/**
-	"mailto" ':' userinfo ['@' host]
-	"news" ':' host
-	"tel" ':' userinfo
-	"fax" ':' userinfo
-	"zos" ':' authority ['/' [zosPath] ['?' query] ['#' fragment]]
-	"http" ':' authority ['/' [path] ['?' query] ['#' fragment]]
-	"https" ':' authority ['/' [path] ['?' query] ['#' fragment]]
-	scheme ':' userinfo ['@' host]
-	scheme ':' host
-	scheme ':' userinfo
-	scheme ':' authority ['/' [path] ['?' query] ['#' fragment]]
-	scheme ':' ['/'] [path] ['?' query] ['#' fragment]
-	scheme ':' authority ['/' [zosPath] ['?' query] ['#' fragment]]
-	scheme ':' ['/'] [zosPath] ['?' query] ['#' fragment]
- */
