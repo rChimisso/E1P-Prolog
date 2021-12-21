@@ -21,4 +21,4 @@ authorityMachine(Chars, Userinfo, Host, Port, Leftover) :-
     userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
 	!, % Avoid considering Host as Userinfo.
     portMachine(UserhostLeftover, Port, Leftover).
-authorityMachine(Chars, [], [], '80', Chars).
+authorityMachine(Chars, [], [], 80, Chars).

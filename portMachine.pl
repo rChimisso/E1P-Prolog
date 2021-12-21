@@ -29,4 +29,5 @@ accept([Char | Chars], State, Port, Leftover) :-
 portMachine(Chars, Port, Leftover) :-
 	initial(State),
 	accept(Chars, State, ValueList, Leftover),
-	listToURIValue(ValueList, Port).
+	listToURIValue(ValueList, AtomPort),
+	atom_number(AtomPort, Port).

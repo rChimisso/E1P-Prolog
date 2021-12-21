@@ -9,20 +9,20 @@ noPathScheme(Scheme) :-
 	Scheme \= http,
 	Scheme \= https.
 
-uriMachine(Chars, uri(mailto, Userinfo, Host, '80', [], [], [])) :-
+uriMachine(Chars, uri(mailto, Userinfo, Host, 80, [], [], [])) :-
 	!,
     userhostMachine(Chars, Userinfo, Host, []),
 	Userinfo \= [].
-uriMachine(Chars, uri(news, [], Host, '80', [], [], [])) :-
+uriMachine(Chars, uri(news, [], Host, 80, [], [], [])) :-
 	!,
     userhostMachine(Chars, '', Host, []),
 	!, % Avoid considering Host as Userinfo.
 	Host \= [].
-uriMachine(Chars, uri(tel, Userinfo, [], '80', [], [], [])) :-
+uriMachine(Chars, uri(tel, Userinfo, [], 80, [], [], [])) :-
 	!,
     userhostMachine(Chars, Userinfo, '', []),
 	Userinfo \= [].
-uriMachine(Chars, uri(fax, Userinfo, [], '80', [], [], [])) :-
+uriMachine(Chars, uri(fax, Userinfo, [], 80, [], [], [])) :-
 	!,
     userhostMachine(Chars, Userinfo, '', []),
 	Userinfo \= [].
@@ -32,13 +32,13 @@ uriMachine(Chars, uri(fax, Userinfo, [], '80', [], [], [])) :-
  * both Userinfo and Host present (when '@' is present).
  * Without it, it would be checked if the URI has Path and thus the false.
  */
-uriMachine(Chars, uri(Scheme, Userinfo, Host, '80', [], [], [])) :-
+uriMachine(Chars, uri(Scheme, Userinfo, Host, 80, [], [], [])) :-
 	noPathScheme(Scheme),
     userhostMachine(Chars, Userinfo, Host, []),
 	Userinfo \= [],
 	Host \= [],
 	!.
-uriMachine(Chars, uri(Scheme, Userinfo, Host, '80', [], [], [])) :-
+uriMachine(Chars, uri(Scheme, Userinfo, Host, 80, [], [], [])) :-
 	noPathScheme(Scheme),
     userhostMachine(Chars, Userinfo, Host, []).
 uriMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
