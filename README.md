@@ -35,8 +35,8 @@ It's based on the following case-insensitive productions:
 	| ("http" | "https") ':' authority ['/' [path] ['?' query] ['#' fragment]]  
 	| scheme ':' host  
 	| scheme ':' userinfo ['@' host]  
-	| scheme ':' ['/'] [(path | zosPath)] ['?' query] ['#' fragment]  
-	| scheme ':' authority ['/' [(path | zosPath)] ['?' query] ['#' fragment]]
+	| scheme ':' ['/'] [path] ['?' query] ['#' fragment]  
+	| scheme ':' authority ['/' [path] ['?' query] ['#' fragment]]
 - scheme ::= identifier+  
 	("news", "tel", "fax", "mailto", "zos", "http" and "https" are excluded)
 - authority ::= "//" [userinfo '@'] host [':' port]
@@ -67,9 +67,10 @@ and ':'.
 The whole project uses a custom made utility module (['charUtils.pl']) to
 recognize to which character class a given character belongs to.  
 The above productions were generalized and unified, and specific FSMs are used
-to recognize each building block or a set of them, apart from the Scheme.  
-Those fundamental FSMs are merged into bigger and more complex ones and the
-same applies for the latters until reaching [uriMachine].  
+to recognize each URI building block or a set of them.  
+Those fundamental FSMs, apart from the Scheme one, are merged into bigger and
+more complex ones and the same applies for the latters until reaching
+[uriMachine].  
 [uriMachine] is the most general FSM to recognize each production, accounting
 also for the value of the Scheme.
 Finally, uri_parse parses the Scheme and uses [uriMachine] to parse the rest.
