@@ -2,7 +2,6 @@
 
 :- use_module(charUtils).
 
-initial(empty).
 final(scheme).
 
 delta(empty, Char, scheme) :- isIdentifierChar(Char), !.
@@ -21,6 +20,5 @@ accept([Char | Chars], State, Scheme, Leftover) :-
  * True when the list of characters initially has a valid URI scheme definition.
  */
 schemeMachine(Chars, Scheme, Leftover) :-
-	initial(State),
-	accept(Chars, State, ValueList, Leftover),
+	accept(Chars, empty, ValueList, Leftover),
 	listToURIValue(ValueList, Scheme).

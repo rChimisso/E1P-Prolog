@@ -2,7 +2,6 @@
 
 :- use_module(charUtils).
 
-initial(empty).
 final(empty).
 final(port).
 
@@ -27,7 +26,6 @@ accept([Char | Chars], State, Port, Leftover) :-
  * True when the list of characters initially has a valid URI port definition.
  */
 portMachine(Chars, Port, Leftover) :-
-	initial(State),
-	accept(Chars, State, ValueList, Leftover),
+	accept(Chars, empty, ValueList, Leftover),
 	listToURIValue(ValueList, AtomPort),
 	atom_number(AtomPort, Port).

@@ -2,7 +2,6 @@
 
 :- use_module(charUtils).
 
-initial(empty).
 final(empty).
 final(slash).
 final(path).
@@ -35,6 +34,5 @@ accept([Char | Chars], State, Path, Leftover) :-
  * True when the list of characters initially has a valid URI path definition.
  */
 pathMachine(Chars, Path, Leftover) :-
-	initial(State),
-	accept(Chars, State, ValueList, Leftover),
+	accept(Chars, empty, ValueList, Leftover),
 	listToURIValue(ValueList, Path).

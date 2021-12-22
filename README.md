@@ -5,7 +5,7 @@ Simple Prolog library to parse strings into URIs.
 #
 
 ## Library interface
-This library provides 3 methods: 1 parser and 2 utilities.
+This library provides 3 predicates: 1 parser and 2 utilities.
 
 uri_parse/2, the parser, takes care of parsing any given string and
 instantiating the matching URI, also working with already partially or fully
@@ -18,7 +18,7 @@ It's important to note that the uri_displays do NOT check for URI validity.
 
 ## How to use
 It's just necessary to load the file ['uri-parse.pl'].  
-Then each method comes with a short Doc compliant to the
+Then each predicate comes with a short Doc compliant to the
 [Prolog Documentation Standard] explaining each parameter and result.
 #
 
@@ -27,16 +27,14 @@ The parsing is based on a simplified version of [RFC-3986].
 
 It's based on the following case-insensitive productions:
 - uri ::=  
-	"news" ':' host  
-	| ("tel" | "fax") ':' userinfo  
-	| "mailto" ':' userinfo ['@' host]  
-	| "zos" ':' ['/'] [zosPath] ['?' query] ['#' fragment]  
-	| "zos" ':' authority ['/' [zosPath] ['?' query] ['#' fragment]]  
-	| ("http" | "https") ':' authority ['/' [path] ['?' query] ['#' fragment]]  
-	| scheme ':' host  
-	| scheme ':' userinfo ['@' host]  
-	| scheme ':' ['/'] [path] ['?' query] ['#' fragment]  
-	| scheme ':' authority ['/' [path] ['?' query] ['#' fragment]]
+	"news" ':' [host]  
+	| ("tel" | "fax") ':' [userinfo]  
+	| "mailto" ':' [userinfo ['@' host]]  
+	| "zos" ':' [authority] ['/' [zosPath] ['?' query] ['#' fragment]]  
+	| ("http" | "https") ':' [authority] ['/' [path] ['?' query] ['#' fragment]]  
+	| scheme ':' [host]  
+	| scheme ':' [userinfo ['@' host]]  
+	| scheme ':' [authority] ['/' [path] ['?' query] ['#' fragment]]
 - scheme ::= identifier+  
 	("news", "tel", "fax", "mailto", "zos", "http" and "https" are excluded)
 - authority ::= "//" [userinfo '@'] host [':' port]

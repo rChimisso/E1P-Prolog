@@ -2,7 +2,6 @@
 
 :- use_module(charUtils).
 
-initial(empty).
 final(empty).
 final(slash).
 final(id44).
@@ -63,6 +62,5 @@ accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
  * path definition, but without any constraint on ID44 and ID8 length.
  */
 zPathMachine(Chars, ID44, ID8, Path, Leftover) :-
-	initial(State),
-	accept(Chars, State, ID44, ID8, ValueList, Leftover),
+	accept(Chars, empty, ID44, ID8, ValueList, Leftover),
 	listToURIValue(ValueList, Path).

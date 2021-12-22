@@ -2,7 +2,6 @@
 
 :- use_module(charUtils).
 
-initial(empty).
 final(empty).
 final(query).
 final(fragment).
@@ -41,7 +40,6 @@ accept([Char | Chars], State, Query, Fragment) :-
  * Query and Fragment in that order.
  */
 qfMachine(Chars, Query, Fragment) :-
-	initial(State),
-	accept(Chars, State, QueryList, FragmentList),
+	accept(Chars, empty, QueryList, FragmentList),
 	listToURIValue(QueryList, Query),
 	listToURIValue(FragmentList, Fragment).

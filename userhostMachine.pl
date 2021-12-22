@@ -2,7 +2,7 @@
 
 :- use_module(charUtils).
 
-initial(empty).
+final(empty).
 final(userinfo).
 final(host).
 
@@ -43,7 +43,6 @@ accept([Char | Chars], State, Userinfo, Host, Leftover) :-
  * Userinfo and/or Host.
  */
 userhostMachine(Chars, Userinfo, Host, Leftover) :-
-	initial(State),
-	accept(Chars, State, UserinfoList, HostList, Leftover),
+	accept(Chars, empty, UserinfoList, HostList, Leftover),
 	listToURIValue(UserinfoList, Userinfo),
 	listToURIValue(HostList, Host).
