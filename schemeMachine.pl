@@ -7,7 +7,7 @@ final(scheme).
 delta(empty, Char, scheme) :- isIdentifierChar(Char), !.
 delta(scheme, Char, scheme) :- isIdentifierChar(Char), !.
 
-accept([':' | Leftover], State, [], Leftover) :-
+accept([: | Leftover], State, [], Leftover) :-
 	final(State),
 	!.
 accept([Char | Chars], State, Scheme, Leftover) :-

@@ -3,11 +3,9 @@
 :- use_module(charUtils).
 
 final(empty).
-final(slash).
 final(id44).
 final(path).
 
-delta(slash, Char, id44) :- isAlphaChar(Char), !.
 delta(empty, Char, id44) :- isAlphaChar(Char), !.
 delta(id44, Char, id44) :- isAlnumChar(Char), !.
 delta(id44, '.', separator) :- !.
@@ -20,14 +18,11 @@ accept([], State, '', '', [], []) :-
 	final(State),
 	!.
 accept([')' | Rest], id8, '', '', [')'], Rest) :- !.
-accept(['?' | Rest], State, '', '', [], ['?' | Rest]) :-
+accept([? | Rest], State, '', '', [], [? | Rest]) :-
 	final(State),
 	!.
-accept(['#' | Rest], State, '', '', [], ['#' | Rest]) :-
+accept([# | Rest], State, '', '', [], [# | Rest]) :-
 	final(State),
-	!.
-accept(['/' | Chars], empty, ID44, ID8, Path, Leftover) :-
-	accept(Chars, slash, ID44, ID8, Path, Leftover),
 	!.
 accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
 	delta(State, Char, id44),

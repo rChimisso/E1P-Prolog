@@ -2,7 +2,6 @@
 
 :- use_module(charUtils).
 
-final(empty).
 final(userinfo).
 final(host).
 
@@ -17,9 +16,9 @@ delta(userinfo, Char, userinfo) :- isIdentifierChar(Char).
 accept([], State, [], [], []) :-
 	final(State),
 	!.
-accept([':' | Rest], host, [], [], [':' | Rest]) :- !.
-accept(['/' | Rest], host, [], [], ['/' | Rest]) :- !.
-accept(['@' | Chars], userinfo, [], Host, Leftover) :-
+accept([: | Rest], host, [], [], [: | Rest]) :- !.
+accept([/ | Rest], host, [], [], [/ | Rest]) :- !.
+accept([@ | Chars], userinfo, [], Host, Leftover) :-
 	accept(Chars, at, _, Host, Leftover),
 	!.
 accept([Char | Chars], State, Userinfo, Host, Leftover) :-

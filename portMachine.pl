@@ -5,14 +5,16 @@
 final(empty).
 final(port).
 
-delta(empty, Char, colon) :- isDigitChar(Char), !.
 delta(colon, Char, port) :- isDigitChar(Char), !.
 delta(port, Char, port) :- isDigitChar(Char), !.
 
 accept([], port, [], []) :- !.
 accept([], empty, ['8', '0'], []) :- !.
-accept(['/' | Rest], State, Port, ['/' | Rest]) :-
+accept([/ | Leftover], State, Port, Leftover) :-
 	accept([], State, Port, []),
+	!.
+accept([: | Chars], empty, Port, Leftover) :-
+	accept(Chars, colon, Port, Leftover),
 	!.
 accept([Char | Chars], State, Port, Leftover) :-
 	delta(State, Char, NewState),

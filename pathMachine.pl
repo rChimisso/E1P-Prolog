@@ -3,26 +3,21 @@
 :- use_module(charUtils).
 
 final(empty).
-final(slash).
 final(path).
 
-delta(slash, Char, path) :- isIdentifierChar(Char), !.
 delta(empty, Char, path) :- isIdentifierChar(Char), !.
 delta(path, Char, path) :- isIdentifierChar(Char), !.
-delta(path, '/', separator) :- !.
+delta(path, /, separator) :- !.
 delta(separator, Char, path) :- isIdentifierChar(Char), !.
 
 accept([], State, [], []) :-
 	final(State),
 	!.
-accept(['?' | Rest], State, [], ['?' | Rest]) :-
+accept([? | Rest], State, [], [? | Rest]) :-
 	final(State),
 	!.
-accept(['#' | Rest], State, [], ['#' | Rest]) :-
+accept([# | Rest], State, [], [# | Rest]) :-
 	final(State),
-	!.
-accept(['/' | Chars], empty, Path, Leftover) :-
-	accept(Chars, slash, Path, Leftover),
 	!.
 accept([Char | Chars], State, Path, Leftover) :-
 	delta(State, Char, NewState),
