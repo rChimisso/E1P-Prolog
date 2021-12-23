@@ -14,13 +14,14 @@ noPathScheme(Scheme) :-
 /**
  * 
  */
+uriMachine(Chars, uri(mailto, [], [], 80, [], [], [])) :-
+    userhostMachine(Chars, '', '', []),
+	!.
 uriMachine(Chars, uri(mailto, Userinfo, Host, 80, [], [], [])) :-
+	!,
     userhostMachine(Chars, Userinfo, Host, []),
 	Userinfo \= [],
 	!.
-uriMachine(Chars, uri(mailto, [], [], 80, [], [], [])) :-
-	!,
-    userhostMachine(Chars, '', '', []).
 uriMachine(Chars, uri(news, [], Host, 80, [], [], [])) :-
 	!,
     userhostMachine(Chars, '', Host, []),
@@ -39,6 +40,11 @@ uriMachine(Chars, uri(Scheme, Userinfo, Host, 80, [], [], [])) :-
 	!.
 uriMachine(Chars, uri(Scheme, Userinfo, Host, 80, [], [], [])) :-
 	noPathScheme(Scheme),
-    userhostMachine(Chars, Userinfo, Host, []).
+    userhostMachine(Chars, Userinfo, Host, []),
+	Host \= [].
+uriMachine(Chars, uri(Scheme, Userinfo, Host, 80, [], [], [])) :-
+	noPathScheme(Scheme),
+    userhostMachine(Chars, Userinfo, Host, []),
+	Userinfo \= [].
 uriMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	prMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)).
