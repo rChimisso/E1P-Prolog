@@ -7,10 +7,10 @@ final(id44).
 final(path).
 
 delta(empty, Char, id44) :- isAlphaChar(Char), !.
-delta(id44, Char, id44) :- isAlnumChar(Char), !.
 delta(id44, '.', separator) :- !.
-delta(separator, Char, id44) :- isAlnumChar(Char), !.
 delta(id44, '(', id8Start) :- !.
+delta(id44, Char, id44) :- isAlnumChar(Char), !.
+delta(separator, Char, id44) :- isAlnumChar(Char), !.
 delta(id8Start, Char, id8) :- isAlphaChar(Char), !.
 delta(id8, Char, id8) :- isAlnumChar(Char), !.
 
@@ -26,31 +26,35 @@ accept([# | Rest], State, '', '', [], [# | Rest]) :-
 	!.
 accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
 	delta(State, Char, id44),
+	!,
 	accept(Chars, id44, RestID44, ID8, RestPath, Leftover),
 	!,
 	atom_concat(Char, RestID44, ID44),
 	append([Char], RestPath, Path).
 accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
 	delta(State, Char, separator),
+	!,
 	accept(Chars, separator, RestID44, ID8, RestPath, Leftover),
 	!,
 	atom_concat(Char, RestID44, ID44),
 	append([Char], RestPath, Path).
 accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
 	delta(State, Char, id8),
+	!,
 	accept(Chars, id8, ID44, RestID8, RestPath, Leftover),
 	!,
 	atom_concat(Char, RestID8, ID8),
 	append([Char], RestPath, Path).
 accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
 	delta(State, Char, NewState),
+	!,
 	accept(Chars, NewState, ID44, ID8, RestPath, Leftover),
 	append([Char], RestPath, Path).
 /**
  * zPathMachine(
-	++Chars:char[],
-	Path:atomic,
-	-Leftover:char[]
+ *	++Chars:char[],
+ *	Path:atomic,
+ *	-Leftover:char[]
  * ) is semidet.
  * 
  * True when the list of characters initially has a valid URI zOS specific
