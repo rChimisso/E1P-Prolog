@@ -10,7 +10,7 @@
 ]).
 
 /**
- * isAllowedChar(++Char:char) is semidet.
+ * isAllowedChar(++Char:atom) is semidet.
  * 
  * True if Char is a URI restrained ASCII character.
  */
@@ -23,20 +23,11 @@ isAllowedChar(Char) :-
  * True if the integer supplied represents a URI restrained ASCII character.
  */
 isAllowedCode(CharCode) :-
-	CharCode > 32,
+	CharCode > 31,
 	CharCode < 127,
-	CharCode \= 34, % "
-	CharCode \= 37, % %
-	CharCode \= 60, % <
-	CharCode \= 62, % >
-	CharCode \= 92, % \
-	CharCode \= 94, % ^
-	CharCode \= 96, % `
-	CharCode \= 123, % {
-	CharCode \= 124, % |
-	CharCode \= 125. % }
+	CharCode \= 92. % \
 /**
- * isQueryChar(++Char:char) is semidet.
+ * isQueryChar(++Char:atom) is semidet.
  * 
  * True if Char is  a URI restrained ASCII character,
  * apart from '#'.
@@ -54,7 +45,7 @@ isQueryCode(CharCode) :-
 	isAllowedCode(CharCode),
 	CharCode \= 35.
 /**
- * isIdentifierChar(++Char:char) is semidet.
+ * isIdentifierChar(++Char:atom) is semidet.
  * 
  * True if Char is a URI restrained ASCII character,
  * apart from '#', '/', ':', '?' and '@'.
@@ -75,7 +66,7 @@ isIdentifierCode(CharCode) :-
 	CharCode \= 63,
 	CharCode \= 64.
 /**
- * isHostIdentifierChar(++Char:char) is semidet.
+ * isHostIdentifierChar(++Char:atom) is semidet.
  * 
  * True if Char is a URI restrained ASCII character,
  * apart from '#', '.', '/', ':', '?' and '@'.
@@ -93,7 +84,7 @@ isHostIdentifierCode(CharCode) :-
 	isIdentifierCode(CharCode),
 	CharCode \= 46.
 /**
- * isDigitChar(++Char:char) is semidet.
+ * isDigitChar(++Char:atom) is semidet.
  * 
  * True if Char is a URI restrained ASCII character representing a digit.
  */
@@ -110,7 +101,7 @@ isDigitCode(CharCode) :-
 	CharCode > 47,
 	CharCode < 58.
 /**
- * isAlphaChar(++Char:char) is semidet.
+ * isAlphaChar(++Char:atom) is semidet.
  * 
  * True if Char is a alphabetic URI restrained ASCII character.
  */
@@ -118,7 +109,7 @@ isAlphaChar(Char) :-
 	char_type(Char, alpha),
 	isAllowedChar(Char).
 /**
- * isAlnumChar(++Char:char) is semidet.
+ * isAlnumChar(++Char:atom) is semidet.
  * 
  * True if Char is a alphanumeric URI restrained ASCII character.
  */
@@ -126,10 +117,30 @@ isAlnumChar(Char) :-
 	char_type(Char, alnum),
 	isAllowedChar(Char).
 /**
+ * octetList(?List:atom[], ?OctetList:atom[]) is semidet.
+ * 
+ * True when OctetList is the same as List, but with its special characters
+ * converted into URI percentage encoded octets.
+ */
+octetList([], []) :- !.
+octetList([' ' | Ts], ['%', '2', '0' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList(['"' | Ts], ['%', '2', '2' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList(['%' | Ts], ['%', '2', '5' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList(['<' | Ts], ['%', '3', 'C' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList(['>' | Ts], ['%', '3', 'E' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList(['^' | Ts], ['%', '5', 'E' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList(['`' | Ts], ['%', '6', '0' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList(['{' | Ts], ['%', '7', 'B' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList(['|' | Ts], ['%', '7', 'C' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList(['}' | Ts], ['%', '7', 'D' | OctetTs]) :- !, octetList(Ts, OctetTs).
+octetList([H | Ts], [H | OctetTs]) :- octetList(Ts, OctetTs).
+/**
  * listToURIValue(++List:list, -Value:atomic) is semidet.
  * listToURIValue(-List:list, ++Value:atomic) is semidet.
  * 
  * True if the given list can be converted to an atom or viceversa.
  */
 listToURIValue([], []) :- !.
-listToURIValue(List, Value) :- atom_chars(Value, List).
+listToURIValue(List, Value) :-
+	octetList(List, OctetList),
+	atom_chars(Value, OctetList).

@@ -5,11 +5,11 @@
 
 /**
  * authorityMachine(
- *	++Chars:char[],
+ *	++Chars:atom[],
  *	-Userinfo:atomic,
  *	-Host:atomic,
  *	-Port:atomic,
- *	-Leftover:char[]
+ *	-Leftover:atom[]
  * ) is nondet.
  * 
  * True when the list of characters initially has a valid URI authority

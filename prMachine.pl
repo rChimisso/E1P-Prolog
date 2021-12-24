@@ -5,7 +5,7 @@
 :- use_module(zpqfMachine).
 
 /**
- * prMachine(++Chars:char[], -Uri:uri) is semidet.
+ * prMachine(++Chars:atom[], -Uri:uri) is semidet.
  * 
  * True when the given URI is valid.  
  * This machine is specific for URIs that can have the Path field

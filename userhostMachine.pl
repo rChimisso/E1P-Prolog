@@ -32,10 +32,10 @@ accept([Char | Chars], State, Userinfo, Host, Leftover) :-
 	append([Char], RestUserinfo, Userinfo).
 /**
  * userhostMachine(
- *	++Chars:char[],
+ *	++Chars:atom[],
  *	-Userinfo:atomic,
  *	-Host:atomic,
- *  -Leftover:char[]
+ *  -Leftover:atom[]
  * ) is semidet.
  * 
  * True when the list of characters initially has a valid URI definition for

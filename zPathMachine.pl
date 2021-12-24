@@ -52,9 +52,9 @@ accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
 	append([Char], RestPath, Path).
 /**
  * zPathMachine(
- *	++Chars:char[],
+ *	++Chars:atom[],
  *	Path:atomic,
- *	-Leftover:char[]
+ *	-Leftover:atom[]
  * ) is semidet.
  * 
  * True when the list of characters initially has a valid URI zOS specific

@@ -14,7 +14,7 @@ noPathScheme(Scheme) :-
 	Scheme \= http,
 	Scheme \= https.
 /**
- * uriMachine(++Chars:char[], -Uri:uri) is nondet.
+ * uriMachine(++Chars:atom[], -Uri:uri) is nondet.
  * 
  * True when the given list of characters forms a valid URI.
  * The URI Scheme field must be ground at call-time for a correct execution.

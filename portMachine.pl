@@ -21,7 +21,7 @@ accept([Char | Chars], State, Port, Leftover) :-
 	accept(Chars, NewState, RestPort, Leftover),
 	append([Char], RestPort, Port).
 /**
- * portMachine(++Chars:char[], -Port:atomic, -Leftover:char[]) is semidet.
+ * portMachine(++Chars:atom[], -Port:atomic, -Leftover:atom[]) is semidet.
  * 
  * True when the list of characters initially has a valid URI port definition.
  */

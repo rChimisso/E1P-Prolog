@@ -5,7 +5,7 @@
 
 /**
  * zpqfMachine(
- *	++Chars:char[],
+ *	++Chars:atom[],
  *	-Path:atomic,
  *	-Query:atomic,
  *	-Fragment:atomic
