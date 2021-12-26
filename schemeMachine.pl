@@ -2,14 +2,10 @@
 
 :- use_module(charUtils).
 
-final(scheme).
-
 delta(empty, Char, scheme) :- isIdentifierChar(Char), !.
 delta(scheme, Char, scheme) :- isIdentifierChar(Char), !.
 
-accept([: | Leftover], State, [], Leftover) :-
-	final(State),
-	!.
+accept([: | Leftover], scheme, [], Leftover) :- !.
 accept([Char | Chars], State, Scheme, Leftover) :-
 	delta(State, Char, NewState),
 	accept(Chars, NewState, RestScheme, Leftover),

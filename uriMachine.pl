@@ -5,15 +5,6 @@
 :- use_module(prMachine).
 
 /**
- * noPathScheme(++Scheme:atom) is semidet.
- * 
- * True when Scheme is not one in [zos, http, https].
- */
-noPathScheme(Scheme) :-
-	Scheme \= zos,
-	Scheme \= http,
-	Scheme \= https.
-/**
  * uriMachine(++Chars:atom[], -Uri:uri) is nondet.
  * 
  * True when the given list of characters forms a valid URI.
@@ -38,5 +29,7 @@ uriMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	prMachine(Chars, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)),
 	!.
 uriMachine(Chars, uri(Scheme, Userinfo, Host, 80, [], [], [])) :-
-	noPathScheme(Scheme),
+	Scheme \= zos,
+	Scheme \= http,
+	Scheme \= https,
     userhostMachine(Chars, Userinfo, Host, []).
