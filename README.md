@@ -30,7 +30,7 @@ It's based on the following case-insensitive productions:
 	"news" ':' [host]  
 	| ("tel" | "fax") ':' [userinfo]  
 	| "mailto" ':' [userinfo ['@' host]]  
-	| "zos" ':' [authority] ['/' [zosPath] ['?' query] ['#' fragment]]  
+	| "zos" ':' [authority] ['/' zosPath ['?' query] ['#' fragment]]  
 	| ("http" | "https") ':' [authority] ['/' [path] ['?' query] ['#' fragment]]  
 	| scheme ':' [host]  
 	| scheme ':' [userinfo ['@' host]]  

@@ -22,4 +22,4 @@ authorityMachine(Chars, Userinfo, Host, Port, Leftover) :-
 	!, % Avoid considering Host as Userinfo.
 	Host \= [],
     portMachine(UserhostLeftover, Port, Leftover).
-authorityMachine([/ | Chars], [], [], 80, Chars).
+authorityMachine([/ | Chars], [], [], 80, [/ | Chars]).

@@ -10,7 +10,7 @@ delta(port, Char, port) :- isDigitChar(Char), !.
 
 accept([], port, [], []) :- !.
 accept([], empty, ['8', '0'], []) :- !.
-accept([/ | Leftover], State, Port, Leftover) :-
+accept([/ | Leftover], State, Port, [/ | Leftover]) :-
 	accept([], State, Port, []),
 	!.
 accept([: | Chars], empty, Port, Leftover) :-

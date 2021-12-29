@@ -6,7 +6,8 @@ final(empty).
 final(id44).
 final(path).
 
-delta(empty, Char, id44) :- isAlphaChar(Char), !.
+delta(empty, /, slash) :- !.
+delta(slash, Char, id44) :- isAlphaChar(Char), !.
 delta(id44, '.', separator) :- !.
 delta(id44, '(', id8Start) :- !.
 delta(id44, Char, id44) :- isAlnumChar(Char), !.

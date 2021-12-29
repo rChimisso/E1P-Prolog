@@ -3,9 +3,11 @@
 :- use_module(charUtils).
 
 final(empty).
+final(slash).
 final(path).
 
-delta(empty, Char, path) :- isIdentifierChar(Char), !.
+delta(empty, /, slash) :- !.
+delta(slash, Char, path) :- isIdentifierChar(Char), !.
 delta(path, Char, path) :- isIdentifierChar(Char), !.
 delta(path, /, separator) :- !.
 delta(separator, Char, path) :- isIdentifierChar(Char), !.
