@@ -65,7 +65,8 @@ and ':'.
 
 ## Mechanisms behind
 The whole project uses a custom made utility module ([charUtils]) to
-recognize to which character class a given character belongs to.  
+recognize to which character class a given character belongs to and to convert
+values from list of characters to URI values with octets.  
 The first idea was to create a specific Finite State Machine for each URI part
 (Scheme, Userinfo, Host, Port, Path, Query, Fragment).  
 To make it possible each machine would have to understand when to stop and leave
