@@ -9,7 +9,8 @@ This library provides 3 predicates: 1 parser and 2 utilities.
 
 uri_parse/2, the parser, takes care of parsing any given string and
 instantiating the matching URI, also working with already partially or fully
-instantiated URIs.
+instantiated URIs.  
+Strings with special characters are converted into their respective octets.
 
 uri_display/1 and uri_display/2 respectively print the given URI on
 the current output stream or any given stream.  
@@ -52,7 +53,7 @@ It's based on the following case-insensitive productions:
 - fragment ::= character+  
 #### Where:
 - 'character' is any ASCII character between 32 and 127 (both excluded) and
-without '"', '%', '<', '>', '\', '^', '`'. '{', '|' and '}'.
+without '\'.
 - 'queryCharacter' is as 'character' but without '#'.
 - 'hostIdentifier' is as 'queryCharacter' but without  '/', '?', '#', '@',
 and ':'.
