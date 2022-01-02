@@ -8,7 +8,7 @@
  */
 uri_parse(String, uri(Scheme, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	string_chars(String, Chars),
-    schemeMachine(Chars, Scheme, Leftover),
+	schemeMachine(Chars, Scheme, Leftover),
 	downcase_atom(Scheme, LoweredScheme),
 	uriMachine(
 		Leftover,

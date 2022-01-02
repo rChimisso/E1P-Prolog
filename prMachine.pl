@@ -14,7 +14,7 @@
 prMachine(Chars, uri(zos, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	!,
 	authorityMachine(Chars, Userinfo, Host, Port, Leftover),
-    zpqfMachine(Leftover, Path, Query, Fragment).
+	zpqfMachine(Leftover, Path, Query, Fragment).
 prMachine(Chars, uri(_, Userinfo, Host, Port, Path, Query, Fragment)) :-
 	authorityMachine(Chars, Userinfo, Host, Port, Leftover),
-    pqfMachine(Leftover, Path, Query, Fragment).
+	pqfMachine(Leftover, Path, Query, Fragment).

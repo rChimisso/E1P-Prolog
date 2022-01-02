@@ -18,8 +18,8 @@
 authorityMachine(Chars, Userinfo, Host, Port, Leftover) :-
 	append([/, /], TrimmedChars, Chars),
 	!,
-    userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
+	userhostMachine(TrimmedChars, Userinfo, Host, UserhostLeftover),
 	!, % Avoid considering Host as Userinfo.
 	Host \= [],
-    portMachine(UserhostLeftover, Port, Leftover).
+	portMachine(UserhostLeftover, Port, Leftover).
 authorityMachine([/ | Chars], [], [], 80, [/ | Chars]).
