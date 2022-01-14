@@ -112,6 +112,39 @@ machines ([userhostMachine] and [prMachine]) with a few restraints to recognize
 any valid URI.  
 This final machine is then used in combination with [schemeMachine] in
 uri_parse/2, that is the method exposed by the library.
+#
+
+## Code statistics
+Total : 14 files,  445 codes, 183 comments, 56 blanks, all 684 lines
+
+### Languages
+| language | files | code | comment | blank | total |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| Prolog | 13 | 323 | 183 | 46 | 552 |
+| Markdown | 1 | 122 | 0 | 10 | 132 |
+
+### Directories
+| path | files | code | comment | blank | total |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| . | 14 | 445 | 183 | 56 | 684 |
+
+### Files
+| filename | language | code | comment | blank | total |
+| :--- | :--- | ---: | ---: | ---: | ---: |
+| [README.md](/README.md) | Markdown | 122 | 0 | 10 | 132 |
+| [authorityMachine.pl](/authorityMachine.pl) | Prolog | 11 | 12 | 3 | 26 |
+| [charUtils.pl](/charUtils.pl) | Prolog | 66 | 79 | 1 | 146 |
+| [pathMachine.pl](/pathMachine.pl) | Prolog | 26 | 5 | 5 | 36 |
+| [portMachine.pl](/portMachine.pl) | Prolog | 22 | 5 | 5 | 32 |
+| [pqfMachine.pl](/pqfMachine.pl) | Prolog | 6 | 11 | 3 | 20 |
+| [prMachine.pl](/prMachine.pl) | Prolog | 11 | 7 | 3 | 21 |
+| [qfMachine.pl](/qfMachine.pl) | Prolog | 34 | 6 | 5 | 45 |
+| [schemeMachine.pl](/schemeMachine.pl) | Prolog | 12 | 5 | 4 | 21 |
+| [uri-parse.pl](/uri-parse.pl) | Prolog | 16 | 15 | 2 | 33 |
+| [uriMachine.pl](/uriMachine.pl) | Prolog | 27 | 6 | 2 | 35 |
+| [userhostMachine.pl](/userhostMachine.pl) | Prolog | 32 | 11 | 5 | 48 |
+| [zPathMachine.pl](/zPathMachine.pl) | Prolog | 52 | 10 | 5 | 67 |
+| [zpqfMachine.pl](/zpqfMachine.pl) | Prolog | 8 | 11 | 3 | 22 |
 
 [RFC-3986]: https://datatracker.ietf.org/doc/html/rfc3986
 ['uri-parse.pl']: ./uri-parse.pl
