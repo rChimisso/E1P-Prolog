@@ -6,7 +6,6 @@ final(empty).
 final(id44).
 final(path).
 
-delta(empty, /, slash) :- !.
 delta(slash, Char, id44) :- isAlphaChar(Char), !.
 delta(id44, '.', separator) :- !.
 delta(id44, '(', id8Start) :- !.
@@ -46,6 +45,10 @@ accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
 	!,
 	atom_concat(Char, RestID8, ID8),
 	append([Char], RestPath, Path).
+accept([/ | Rest], empty, ID44, ID8, Path, Leftover) :-
+	!,
+	accept(Rest, slash, ID44, ID8, Path, Leftover),
+	!.
 accept([Char | Chars], State, ID44, ID8, Path, Leftover) :-
 	delta(State, Char, NewState),
 	!,

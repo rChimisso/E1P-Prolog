@@ -6,7 +6,6 @@ final(empty).
 final(slash).
 final(path).
 
-delta(empty, /, slash) :- !.
 delta(slash, Char, path) :- isIdentifierChar(Char), !.
 delta(path, Char, path) :- isIdentifierChar(Char), !.
 delta(path, /, separator) :- !.
@@ -20,6 +19,10 @@ accept([? | Rest], State, [], [? | Rest]) :-
 	!.
 accept([# | Rest], State, [], [# | Rest]) :-
 	final(State),
+	!.
+accept([/ | Rest], empty, Path, Leftover) :-
+	!,
+	accept(Rest, slash, Path, Leftover),
 	!.
 accept([Char | Chars], State, Path, Leftover) :-
 	delta(State, Char, NewState),
